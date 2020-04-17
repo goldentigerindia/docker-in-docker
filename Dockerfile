@@ -48,17 +48,18 @@ ENV GOPATH "$HOME/go"
 ENV PATH "$GOBIN:$GOROOT/bin:$PATH:/root/bin"
 RUN mkdir /app
 RUN /root/.scripts/install_env.sh
-ENV IS_DOCKER "$(cat /app/is_docker)"
-ENV ENVIRONMENT_NAME "$(cat /app/environment_name)"
-ENV BUILD_BRANCH "$(cat /app/build_branch)"
+ARG ENVIRONMENT_NAME
+ENV ENVIRONMENT_NAME=$ENVIRONMENT_NAME
+ARG BUILD_BRANCH
+ENV BUILD_BRANCH=$BUILD_BRANCH
 RUN mkdir -p /root/go/src/github.com/goldentigerindia
 RUN mkdir -p /root/go/bin
-RUN cp /root/.scripts/wrapdocker /app/wrapdocker
+RUN cp /root/.scripts/start.sh /app/start.sh
 RUN chmod 777 -R /app/
 WORKDIR /app
 RUN git clone --depth 1 https://github.com/brendangregg/FlameGraph && \
     git clone --depth 1 https://github.com/iovisor/bcc
-ENTRYPOINT ["./wrapdocker"]
+ENTRYPOINT ["/app/start.sh"]
 EXPOSE 8443
 
 
