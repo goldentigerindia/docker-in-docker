@@ -16,10 +16,10 @@
 REGISTRY_HOST=docker.io
 USERNAME=goldentigerindia
 NAME=$(shell basename $(CURDIR))
-ENVIRONMENT_NAME=develop
+ENVIRONMENT_NAME=dev
 BRANCH := $(shell git for-each-ref --format='%(objectname) %(refname:short)' refs/heads | awk "/^$$(git rev-parse HEAD)/ {print \$$2}")
 HASH := $(shell git rev-parse HEAD)
-DOCKER_BUILD_ARGS= --build-arg BUILD_BRANCH=${BRANCH} --build-arg ENVIRONMENT_NAME=${ENVIRONMENT_NAME}
+DOCKER_BUILD_ARGS= --no-cache --build-arg BUILD_BRANCH=${BRANCH} --build-arg ENVIRONMENT_NAME=${ENVIRONMENT_NAME}
 
 
 RELEASE_SUPPORT := $(shell dirname $(abspath $(lastword $(MAKEFILE_LIST))))/.make-release-support

@@ -47,11 +47,11 @@ ENV GOBIN "$GOROOT/bin"
 ENV GOPATH "$HOME/go"
 ENV PATH "$GOBIN:$GOROOT/bin:$PATH:/root/bin"
 RUN mkdir /app
-RUN /root/.scripts/install_env.sh
 ARG ENVIRONMENT_NAME
 ENV ENVIRONMENT_NAME=$ENVIRONMENT_NAME
 ARG BUILD_BRANCH
 ENV BUILD_BRANCH=$BUILD_BRANCH
+RUN /root/.scripts/install_env.sh
 RUN mkdir -p /root/go/src/github.com/goldentigerindia
 RUN mkdir -p /root/go/bin
 RUN cp /root/.scripts/start.sh /app/start.sh
