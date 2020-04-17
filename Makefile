@@ -13,7 +13,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-REGISTRY_HOST=docker.io
+REGISTRY_HOST=hub.docker.com
 USERNAME=goldentigerindia
 NAME=$(shell basename $(CURDIR))
 ENVIRONMENT_NAME=dev
@@ -23,7 +23,7 @@ DOCKER_BUILD_ARGS= --no-cache --build-arg BUILD_BRANCH=${BRANCH} --build-arg ENV
 
 
 RELEASE_SUPPORT := $(shell dirname $(abspath $(lastword $(MAKEFILE_LIST))))/.make-release-support
-IMAGE=$(REGISTRY_HOST)/$(USERNAME)/$(NAME)
+IMAGE=$(USERNAME)/$(NAME)
 
 VERSION=$(shell . $(RELEASE_SUPPORT) ; getVersion)
 TAG=$(shell . $(RELEASE_SUPPORT); getTag)
