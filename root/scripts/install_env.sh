@@ -1,10 +1,4 @@
 #!/bin/bash -vx
-DOCKER_RESULT=`command -v docker >/dev/null 2>&1 || { exit 1; }`
-DOCKER=false
-if [[ "$DOCKER_RESULT" -eq 0 ]]; then
-   DOCKER=true;
-fi
-echo "$DOCKER" > /app/is_docker
 # The environment on which the agent is running need to pass this as environment variable to docker
 if [ -z "$ENVIRONMENT_NAME" ]
 then  

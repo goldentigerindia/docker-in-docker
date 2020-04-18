@@ -14,13 +14,22 @@ RUN echo "deb http://archive.ubuntu.com/ubuntu xenial main universe" >> /etc/apt
     zip \
     unzip \
     curl \
-    git \
+    gnupg \ 
+    htop \
     man \
     wget \
     build-essential && \
     rm -rf /var/lib/apt/lists/*
-RUN curl -sSL https://get.docker.com/ | sh
-VOLUME /var/lib/docker
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4052245BD4284CDD && \
+    echo "deb https://repo.iovisor.org/apt/$(lsb_release -cs) $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/iovisor.list
+RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+RUN apt-key fingerprint 0EBFCD88
+RUN add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+RUN add-apt-repository ppa:git-core/ppa
+RUN apt-get update -y && apt-get -y install bcc-tools libbcc-examples  docker-ce docker-ce-cli containerd.io linux-headers-generic
 ADD root/scripts /root/.scripts
 RUN chmod 777 -R /root/.scripts
 WORKDIR /root/
@@ -38,16 +47,19 @@ ENV GOBIN "$GOROOT/bin"
 ENV GOPATH "$HOME/go"
 ENV PATH "$GOBIN:$GOROOT/bin:$PATH:/root/bin"
 RUN mkdir /app
+ARG ENVIRONMENT_NAME
+ENV ENVIRONMENT_NAME=$ENVIRONMENT_NAME
+ARG BUILD_BRANCH
+ENV BUILD_BRANCH=$BUILD_BRANCH
 RUN /root/.scripts/install_env.sh
-ENV IS_DOCKER "$(cat /app/is_docker)"
-ENV ENVIRONMENT_NAME "$(cat /app/environment_name)"
-ENV BUILD_BRANCH "$(cat /app/build_branch)"
 RUN mkdir -p /root/go/src/github.com/goldentigerindia
 RUN mkdir -p /root/go/bin
-RUN cp /root/.scripts/wrapdocker /app/wrapdocker
+RUN cp /root/.scripts/start.sh /app/start.sh
 RUN chmod 777 -R /app/
 WORKDIR /app
-ENTRYPOINT ["./wrapdocker"]
+RUN git clone --depth 1 https://github.com/brendangregg/FlameGraph && \
+    git clone --depth 1 https://github.com/iovisor/bcc
+ENTRYPOINT ["/app/start.sh"]
 EXPOSE 8443
 
 
