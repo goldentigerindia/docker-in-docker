@@ -2,8 +2,8 @@ version: '3.4'
 services:
   docker-in-docker:
     restart: always
-    privilaged: true
-    image: goldentigerindia/docker-in-docker:0.0.1-81c513d-dirty
+    privileged: true
+    image: goldentigerindia/docker-in-docker:0.0.1-1577013-dirty
     environment:
       - ENVIRONMENT_NAME=dev
       - BUILD_BRANCH=develop
