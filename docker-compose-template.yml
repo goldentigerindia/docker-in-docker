@@ -1,8 +1,15 @@
 version: '3.4'
 services:
   docker-in-docker:
+    labels:
+      app.name: "docker-in-docker"
+      app.version: "{VERSION}"
+      app.build_date: "{DATE}"
+      app.environment: "{ENVIRONMENT_NAME}"
+      app.branch: "{BUILD_BRANCH}"
+    container_name: docker-in-docker
     restart: always
-    privilaged: true
+    privileged: true
     image: goldentigerindia/docker-in-docker:{VERSION}
     environment:
       - ENVIRONMENT_NAME={ENVIRONMENT_NAME}
@@ -10,6 +17,8 @@ services:
       - HOST_PROC=/rootfs/proc
       - HOST_SYS=/rootfs/sys
       - HOST_ETC=/rootfs/etc
+    ports:
+      - "8080:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /sys:/rootfs/sys:ro
