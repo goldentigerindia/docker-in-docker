@@ -3,17 +3,17 @@ services:
   docker-in-docker:
     labels:
       app.name: "docker-in-docker"
-      app.version: "0.0.1-99fbd99-dirty"
-      app.build_date: "20200418095405"
-      app.environment: "live"
-      app.branch: "release"
+      app.version: "0.0.1-c582c3a-dirty"
+      app.build_date: "20200418102136"
+      app.environment: "dev"
+      app.branch: "develop"
     container_name: docker-in-docker
     restart: always
     privileged: true
-    image: goldentigerindia/docker-in-docker:0.0.1-99fbd99-dirty
+    image: goldentigerindia/docker-in-docker:0.0.1-c582c3a-dirty
     environment:
-      - ENVIRONMENT_NAME=live
-      - BUILD_BRANCH=release
+      - ENVIRONMENT_NAME=dev
+      - BUILD_BRANCH=develop
       - HOST_PROC=/rootfs/proc
       - HOST_SYS=/rootfs/sys
       - HOST_ETC=/rootfs/etc
