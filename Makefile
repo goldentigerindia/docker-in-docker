@@ -63,6 +63,8 @@ docker-build: .release
 	else \
 		echo docker tag $(IMAGE):$(VERSION) $(IMAGE):$(BRANCH) ;\
                 docker tag $(IMAGE):$(VERSION) $(IMAGE):$(BRANCH) ; \
+		echo docker tag $(IMAGE):$(VERSION) $(IMAGE):latest ;\
+                docker tag $(IMAGE):$(VERSION) $(IMAGE):latest ; \
 	fi
 	sed 's/{VERSION}/$(VERSION)/g; s/{ENVIRONMENT_NAME}/$(ENVIRONMENT_NAME)/g; s/{BUILD_BRANCH}/$(BRANCH)/g' docker-compose-template.yml > docker-compose.yml
 .release:
