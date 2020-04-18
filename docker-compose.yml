@@ -3,14 +3,14 @@ services:
   docker-in-docker:
     labels:
       app.name: "docker-in-docker"
-      app.version: "0.0.1-99fbd99-dirty"
-      app.build_date: "20200418095405"
+      app.version: "0.0.1-a57a1a6-dirty"
+      app.build_date: "20200418110932"
       app.environment: "live"
       app.branch: "release"
     container_name: docker-in-docker
     restart: always
     privileged: true
-    image: goldentigerindia/docker-in-docker:0.0.1-99fbd99-dirty
+    image: goldentigerindia/docker-in-docker:0.0.1-a57a1a6-dirty
     environment:
       - ENVIRONMENT_NAME=live
       - BUILD_BRANCH=release
